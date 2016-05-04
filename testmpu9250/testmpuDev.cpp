@@ -1,5 +1,5 @@
 #include <iostream>
-#include "ReadMpu9250.h"
+#include "ReadmpuDev.h"
 #include "myMath.h"
 
 using namespace std;
@@ -21,19 +21,19 @@ int main_test_RTVec_list()
 
 }
 
-
+/****** 何种的 mpu 并不重要，不过，如果是 9250 的话，最好预先进行校准操作 ****/
 int main()
 {
-	mpu9250 m9250;
-	m9250.mpu9250Init();
-	m9250.mpu9250run();
+	mpuDev m9250;
+	m9250.mpuDevInit();
+	m9250.mpuDevrun();
 
 	sleep(3);
 	/*
-	m9250.mpuYaw.mpu9250YawPresentUpdate(false);
+	m9250.mpuYaw.mpuDevYawPresentUpdate(false);
 	cout << m9250.mpuYaw.getYawPresent() << endl;
 	*/
-	m9250.mpuAngle.mpu9250AnglePresentUpdate(false);
+	m9250.mpuAngle.mpuDevAnglePresentUpdate(false);
 	m9250.mpuAngle.getAnglePresent().print_out();
 	
 	//float oldyaw = m9250.mpuYaw.getYawPresent();
@@ -43,12 +43,12 @@ int main()
 	while (true)
 	{
 		//cout << m9250.mpuYaw.getYawPresent() << endl;
-		usleep(10000);
+		usleep(100000);
 		
-		//m9250.mpuYaw.mpu9250YawPresentUpdate(true);
+		//m9250.mpuYaw.mpuDevYawPresentUpdate(true);
 
 		//newyaw = m9250.mpuYaw.getYawPresent();
-		m9250.mpuAngle.mpu9250AnglePresentUpdate(true);
+		m9250.mpuAngle.mpuDevAnglePresentUpdate(true);
 		m9250.mpuAngle.getAnglePresent().print_out();
 		newyaw = m9250.mpuAngle.getAnglePresent().z();
 
@@ -62,7 +62,7 @@ int main()
 		}
 
 
-		//if (m9250.mpuYaw.mpu9250YawReachTarget(oldyaw + 0.1, 0.05)){
+		//if (m9250.mpuYaw.mpuDevYawReachTarget(oldyaw + 0.1, 0.05)){
 		//	//cout << "before: " << now << " ,preset: " << m9250.mpuYaw.getYawPresent() << " ,相差: " << m9250.mpuYaw.getYawPresent() - now << endl;
 		//	cout << "seems ok" << endl;
 		//	break;
