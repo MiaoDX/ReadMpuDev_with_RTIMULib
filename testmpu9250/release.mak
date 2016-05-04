@@ -15,13 +15,13 @@ OBJCOPY := C:/SysGCC/Raspberry/bin/arm-linux-gnueabihf-objcopy.exe
 PREPROCESSOR_MACROS := NDEBUG RELEASE
 INCLUDE_DIRS := 
 LIBRARY_DIRS := 
-LIBRARY_NAMES := 
+LIBRARY_NAMES :=  RTIMULib pthread
 ADDITIONAL_LINKER_INPUTS := 
 MACOS_FRAMEWORKS := 
 LINUX_PACKAGES := 
 
 CFLAGS := -ggdb -ffunction-sections -O3
-CXXFLAGS := -ggdb -ffunction-sections -O3
+CXXFLAGS := -ggdb -ffunction-sections -O3 -std=c++11
 ASFLAGS := 
 LDFLAGS := -Wl,-gc-sections
 COMMONFLAGS := 
