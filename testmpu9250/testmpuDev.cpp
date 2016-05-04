@@ -1,5 +1,5 @@
 #include <iostream>
-#include "ReadmpuDev.h"
+#include "ReadMpuDev.h"
 #include "myMath.h"
 
 using namespace std;
