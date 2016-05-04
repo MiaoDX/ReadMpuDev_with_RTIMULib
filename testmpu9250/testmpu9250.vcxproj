@@ -61,7 +61,6 @@
   <ItemDefinitionGroup>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="myMath.cpp" />
     <ClCompile Include="ReadMpu9250.cpp" />
     <ClCompile Include="testmpu9250.cpp" />
   </ItemGroup>

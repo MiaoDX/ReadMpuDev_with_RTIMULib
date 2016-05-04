@@ -5,9 +5,7 @@
 using namespace std;
 
 
-
-
-int main()
+int main_test_RTVec_list()
 {
 	list<RTVector3_T<RTFLOAT>> livec;
 	livec.push_back(RTVector3_T<RTFLOAT>(0, 1, 2));
@@ -24,27 +22,35 @@ int main()
 }
 
 
-int main2()
+int main()
 {
 	mpu9250 m9250;
 	m9250.mpu9250Init();
 	m9250.mpu9250run();
 
 	sleep(3);
+	/*
 	m9250.mpuYaw.mpu9250YawPresentUpdate(false);
 	cout << m9250.mpuYaw.getYawPresent() << endl;
-	float oldyaw = m9250.mpuYaw.getYawPresent();
+	*/
+	m9250.mpuAngle.mpu9250AnglePresentUpdate(false);
+	m9250.mpuAngle.getAnglePresent().print_out();
+	
+	//float oldyaw = m9250.mpuYaw.getYawPresent();
+	float oldyaw = m9250.mpuAngle.getAnglePresent().z();
 	float newyaw = 0.0, maxyaw = -180.0, minyaw = 180.0;
 
 	while (true)
 	{
 		//cout << m9250.mpuYaw.getYawPresent() << endl;
-		usleep(100000);
+		usleep(10000);
 		
-		m9250.mpuYaw.mpu9250YawPresentUpdate(true);
+		//m9250.mpuYaw.mpu9250YawPresentUpdate(true);
 
-		newyaw = m9250.mpuYaw.getYawPresent();
-
+		//newyaw = m9250.mpuYaw.getYawPresent();
+		m9250.mpuAngle.mpu9250AnglePresentUpdate(true);
+		m9250.mpuAngle.getAnglePresent().print_out();
+		newyaw = m9250.mpuAngle.getAnglePresent().z();
 
 		if (maxyaw < newyaw){
 			maxyaw = newyaw;

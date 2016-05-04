@@ -25,9 +25,6 @@
     <ClCompile Include="ReadMpu9250.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
-    <ClCompile Include="myMath.cpp">
-      <Filter>Source files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />
