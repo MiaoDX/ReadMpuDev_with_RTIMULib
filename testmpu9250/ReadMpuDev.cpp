@@ -15,6 +15,7 @@ int mpuDev::mpuDevInit(){
 
 	if ((imu == NULL) || (imu->IMUType() == RTIMU_TYPE_NULL)) {
 		printf("No IMU found\n");
+		return -1;
 		exit(1);
 	}
 
@@ -35,6 +36,7 @@ int mpuDev::mpuDevInit(){
 	//init mpuDevyaw
 	/*mpuYaw.mpuDevYawInit();*/
 	mpuAngle.mpuDevAngleInit();
+	return 0;
 }
 
 
@@ -104,6 +106,7 @@ int mpuDevAngle::mpuDevAngleInit(int _bufferSize /*= 200*/, int _compareSizeStil
 	compareSizeMoving = _compareSizeMoving;
 	//≥ı ºªØ
 	mpubuffer.resize(bufferSize);
+	return 0;
 }
 
 void mpuDevAngle::mpuDevAngleBufferUpdate(RTVector3_T<RTFLOAT> newAngle) {
@@ -137,7 +140,7 @@ inline RTVector3_T<RTFLOAT> mpuDevAngle::CalculateAvg(list<RTVector3_T<RTFLOAT>>
 }
 
 //µ±«∞÷µ:∞¥ yaw Ω¯––≈≈–Ú£¨ sort(CompZ())
-float mpuDevAngle::mpuDevAnglePresentUpdate(bool moving/* = false*/) {	//moving ÷∏ æ «∑Ò «’˝‘⁄‘À––
+int mpuDevAngle::mpuDevAnglePresentUpdate(bool moving/* = false*/) {	//moving ÷∏ æ «∑Ò «’˝‘⁄‘À––
 
 	int compareSize = moving ? compareSizeMoving : compareSizeStill;
 
@@ -159,6 +162,8 @@ float mpuDevAngle::mpuDevAnglePresentUpdate(bool moving/* = false*/) {	//moving 
 	}
 
 	presentAngle = CalculateAvg(tmpbuffer);
+	
+	return 0;
 }
 
 
@@ -219,7 +224,7 @@ inline float mpuDevYaw::CalculateAvg(list<float> &callist)
 }
 
 //µ±«∞÷µ
-float mpuDevYaw::mpuDevYawPresentUpdate(bool moving/* = false*/){	//moving ÷∏ æ «∑Ò «’˝‘⁄‘À––
+int mpuDevYaw::mpuDevYawPresentUpdate(bool moving/* = false*/){	//moving ÷∏ æ «∑Ò «’˝‘⁄‘À––
 
 	int compareSize = moving ? compareSizeMoving : compareSizeStill;
 
@@ -241,6 +246,8 @@ float mpuDevYaw::mpuDevYawPresentUpdate(bool moving/* = false*/){	//moving ÷∏ æ 
 	}
 
 	presentYaw = CalculateAvg(tmpbuffer);
+	
+	return 0;
 }
 
 //≈–∂œ «∑ÒµΩ¥Ôƒø±ÍŒª÷√£¨ŒÛ≤Ó–°”⁄ 0.1 º¥µ±◊˜µΩ¥Ô
