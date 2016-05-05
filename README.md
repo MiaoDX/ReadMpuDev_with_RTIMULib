@@ -19,6 +19,7 @@ IMU SCL <-> raspberry SCL(Pin 5)
 # Usage In raspberry
 
 git clone https://github.com/MiaoDX/ReadMpuDev_with_RTIMULib.git
+<<<<<<< HEAD
 
 cd ReadMpuDev_with_RTIMULib
 
@@ -33,6 +34,15 @@ make ..
 ./testmpuDev
 
 
+=======
+cd ReadMpuDev_with_RTIMULib
+mkdir build
+cd build
+cmake ..
+make ..
+./testmpuDev
+
+>>>>>>> 2f240a059e8d03439e13b5a6507d9a6549a8330d
 # Attention
 我目前对 RTIMULib 的理解还是有限，这里只是提供一个简单的使用，并为自己的其他应用提供一个合适的数据接口。
 库中有许多东西可以看一看，比如 fusion 算法等。
