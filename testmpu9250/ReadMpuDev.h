@@ -49,7 +49,7 @@ public:
 	inline RTVector3_T<RTFLOAT> CalculateAvg(list<RTVector3_T<RTFLOAT>> &callist);
 
 	//当前值
-	float mpuDevAnglePresentUpdate(bool moving = false);	//moving 指示是否是正在运行,运行时只取较后的几个值，若为静止，可以考虑多一些值
+	int mpuDevAnglePresentUpdate(bool moving = false);	//moving 指示是否是正在运行,运行时只取较后的几个值，若为静止，可以考虑多一些值
 
 	RTVector3_T<RTFLOAT> getAnglePresent();
 
@@ -118,7 +118,7 @@ public:
 	inline float CalculateAvg(list<float> &callist);
 
 	//当前值
-	float mpuDevYawPresentUpdate(bool moving = false);	//moving 指示是否是正在运行,运行时只取较后的几个值，若为静止，可以考虑多一些值
+	int mpuDevYawPresentUpdate(bool moving = false);	//moving 指示是否是正在运行,运行时只取较后的几个值，若为静止，可以考虑多一些值
 
 	//判断是否到达目标位置，误差小于 0.1 即当作到达
 	bool mpuDevYawReachTarget(float targetYaw, float precision = 0.1);
