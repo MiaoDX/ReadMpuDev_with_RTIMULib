@@ -37,12 +37,13 @@ make ..
 ./testmpuDev
 ```
 
-```shell
-直接包含已经编译好的 RTIMULib.lib 文件的方法（编译可以编译原库得到，为了不把用户不需要的源代码暴露出来，这种方式是很好的）
 
-cd testmpu9250/cmake_with_pre_compiled_lib
 
-```
+~~直接包含已经编译好的 RTIMULib.lib 文件的方法（库可以编译原库得到，为了不把用户不需要的源代码暴露出来，这种方式是很好的）~~
+
+~~cd testmpu9250/cmake_with_pre_compiled_lib~~
+
+
 
 
 # Attention
@@ -50,3 +51,5 @@ cd testmpu9250/cmake_with_pre_compiled_lib
 库中有许多东西可以看一看，比如 fusion 算法等。
 
 另外，如果是尝试使用相同的程序连接不同种类的板子（mpu6050,mpu9250）进行实验，需要将上次运行生产的 RTIMULib.ini 删掉。
+
+~~# 推荐使用预编译好的库进行开发~~
