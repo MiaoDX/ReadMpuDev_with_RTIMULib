@@ -8,6 +8,11 @@ Use [RTIMULib](https://github.com/richards-tech/RTIMULib2.git) 来读取 MPU 数
 
 建议先看一下库的简单使用，我们的 main 方法就是在 [原有程序 RTIMULib2/Linux/RTIMULibDrive/RTIMULibDrive.cpp](https://github.com/richards-tech/RTIMULib2/blob/e541f972db2bb30c294b99d3d4bd928c61e6bdf5/Linux/RTIMULibDrive/RTIMULibDrive.cpp) 基础上进行更改的。
 
+# hardware preparation
+1.[推荐：](http://blog.csdn.net/netccy/article/details/48474245)
+
+2.[RTUMULib 提供的 Setting Up - Setting up the Raspberry Pi](https://github.com/richards-tech/RTIMULib2/blob/master/Linux/README.md)
+
 # Wiring
 IMU Vcc <-> raspberry 3.3v(or 5.0v)
 IMU GND <-> raspberry GND(Pin 6)
@@ -18,7 +23,11 @@ IMU SCL <-> raspberry SCL(Pin 5)
 
 # Usage In raspberry
 
+有可能需要管理员权限
+
 ```shell
+直接包含 RTIMULib 源文件的方法
+
 git clone https://github.com/MiaoDX/ReadMpuDev_with_RTIMULib.git
 cd ReadMpuDev_with_RTIMULib/testmpu9250
 mkdir build
@@ -27,6 +36,14 @@ cmake ..
 make ..
 ./testmpuDev
 ```
+
+```shell
+直接包含已经编译好的 RTIMULib.lib 文件的方法（编译可以编译原库得到，为了不把用户不需要的源代码暴露出来，这种方式是很好的）
+
+cd testmpu9250/cmake_with_pre_compiled_lib
+
+```
+
 
 # Attention
 我目前对 RTIMULib 的理解还是有限，这里只是提供一个简单的使用，并为自己的其他应用提供一个合适的数据接口。
