@@ -1,6 +1,5 @@
 #include <iostream>
 #include "ReadMpuDev.h"
-#include "myMath.h"
 
 using namespace std;
 
@@ -22,7 +21,7 @@ int main_test_RTVec_list()
 }
 
 /****** 何种的 mpu 并不重要，不过，如果是 9250 的话，最好预先进行校准操作 ****/
-int main()
+int main2()
 {
 	mpuDev m9250;
 	m9250.mpuDevInit();
