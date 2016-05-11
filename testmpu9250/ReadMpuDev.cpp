@@ -23,7 +23,10 @@ int mpuDev::mpuDevInit(){
 
 	//  set up IMU
 
-	imu->IMUInit();
+	if (!imu->IMUInit()) { //Ê§°Ü
+		cerr << "init imu failed" << endl;
+		return -2;
+	}
 
 	//  this is a convenient place to change fusion parameters
 
