@@ -27,7 +27,8 @@ and store it to a fixed length queen
 #include <cmath>
 #include <future>
 
-#include "myMath.h"
+//#include "myMath.h"
+#include "..\..\myMath.h"
 
 using namespace std;
 
