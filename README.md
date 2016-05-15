@@ -52,4 +52,13 @@ make ..
 
 另外，如果是尝试使用相同的程序连接不同种类的板子（mpu6050,mpu9250）进行实验，需要将上次运行生产的 RTIMULib.ini 删掉。
 
-~~# 推荐使用预编译好的库进行开发~~
+~~# 推荐使用预编译好的库进行开发（见）~~
+
+
+# 关于这个库的一个很好的网站（官网）
+https://richardstechnotes.wordpress.com
+[一些关于 imu 的问题](https://richardstechnotes.wordpress.com/imu-stuff/)
+
+# MPU 的相关知识
+有许多相关的网站，这里摘录一部分
+[Geek Mom Projects](http://www.geekmomprojects.com/)
