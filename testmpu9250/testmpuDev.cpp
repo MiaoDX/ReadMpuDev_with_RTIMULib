@@ -48,7 +48,7 @@ int main()
 
 		//newyaw = m9250.mpuYaw.getYawPresent();
 		m9250.mpuAngle.mpuDevAnglePresentUpdate(true);
-		m9250.mpuAngle.getAnglePresent().print_out();
+		m9250.mpuAngle.getAnglePresent(true).print_out();
 		newyaw = m9250.mpuAngle.getAnglePresent().z();
 
 		if (maxyaw < newyaw){

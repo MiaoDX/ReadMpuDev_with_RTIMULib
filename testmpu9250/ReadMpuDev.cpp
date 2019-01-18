@@ -168,6 +168,22 @@ int mpuDevAngle::mpuDevAnglePresentUpdate(bool moving/* = false*/) {	//moving ָ
 	return 0;
 }
 
-RTVector3_T<RTFLOAT> mpuDevAngle::getAnglePresent() {
+inline RTFLOAT warp_180(RTFLOAT x){
+	return x<-180?x+360:(x>180?x-360:x);
+}
+
+void invertAngle(RTVector3_T<RTFLOAT>& angle){
+	RTFLOAT r, p, y;
+	r = angle.x();
+	p = angle.y();
+	angle.setX(-warp_180(r+180));
+	angle.setY(-warp_180(p));
+}
+
+RTVector3_T<RTFLOAT> mpuDevAngle::getAnglePresent(bool upside_down) {
+        lock_guard<mutex> lock(accessBufferMutex);	
+	if (upside_down){
+		invertAngle(presentAngle);
+	}
 	return presentAngle;
 }

@@ -27,8 +27,7 @@ and store it to a fixed length queen
 #include <cmath>
 #include <future>
 
-//#include "myMath.h"
-#include "../../myMath.h"
+#include "myMath.h"
 
 using namespace std;
 
@@ -52,7 +51,7 @@ public:
 	//当前值
 	int mpuDevAnglePresentUpdate(bool moving = false);	//moving 指示是否是正在运行,运行时只取较后的几个值，若为静止，可以考虑多一些值
 
-	RTVector3_T<RTFLOAT> getAnglePresent();
+	RTVector3_T<RTFLOAT> getAnglePresent(bool upside_down = false);
 
 private:
 	list<RTVector3_T<RTFLOAT>> mpubuffer;

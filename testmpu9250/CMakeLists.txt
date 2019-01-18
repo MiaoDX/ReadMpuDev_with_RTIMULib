@@ -13,10 +13,7 @@ else( CMAKE_BUILD_TYPE STREQUAL "Debug" )
 endif( CMAKE_BUILD_TYPE STREQUAL "Debug" )
 message("Build Type:" ${CMAKE_BUILD_TYPE} ${CMAKE_CXX_FLAGS})
 
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/../RTIMULib)
-
-ADD_SUBDIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/../RTIMULib RTIMULib)
-
+include_directories(${PROJECT_SOURCE_DIR})
 
 SET(DRIVE_SRCS
     myMath.h ReadMpuDev.h ReadMpuDev.cpp testmpuDev.cpp)
