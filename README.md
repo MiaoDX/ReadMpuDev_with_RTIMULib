@@ -43,7 +43,7 @@ sudo make install # the headers are in `include` directory and we can link the l
 
 ```
 git clone https://github.com/MiaoDX/ReadMpuDev_with_RTIMULib.git
-cd ReadMpuDev_with_RTIMULib/testmpu9250
+cd ReadMpuDev_with_RTIMULib
 mkdir build
 cd build
 cmake ..
