@@ -21,7 +21,7 @@ int main_test_RTVec_list()
 }
 
 /****** 何种的 mpu 并不重要，不过，如果是 9250 的话，最好预先进行校准操作 ****/
-int main2()
+int main()
 {
 	mpuDev m9250;
 	m9250.mpuDevInit();
@@ -69,7 +69,7 @@ int main2()
 	}
 
 
-	cout << "HOPE HERE" << endl;
+	cout << "WON'T BE HERE" << endl;
 
 	return 0;
 }

@@ -16,7 +16,6 @@ int mpuDev::mpuDevInit(){
 	if ((imu == NULL) || (imu->IMUType() == RTIMU_TYPE_NULL)) {
 		printf("No IMU found\n");
 		return -1;
-		exit(1);
 	}
 
 	//  This is an opportunity to manually override any settings before the call IMUInit
@@ -150,7 +149,7 @@ int mpuDevAngle::mpuDevAnglePresentUpdate(bool moving/* = false*/) {	//moving 指
 	//tmpbuffer 为判断当前位置的 buffer，首先取出需要大小的元组
 	tmpbuffer.clear();
 	accessBufferMutex.lock();
-	tmpbuffer = mpubuffer;
+	tmpbuffer.assign(mpubuffer.begin(), mpubuffer.end());
 	accessBufferMutex.unlock();
 	std::list<RTVector3_T<RTFLOAT>>::iterator it1, it2;
 	it1 = it2 = tmpbuffer.begin();
@@ -169,103 +168,6 @@ int mpuDevAngle::mpuDevAnglePresentUpdate(bool moving/* = false*/) {	//moving 指
 	return 0;
 }
 
-
-///***** Not implement ****/
-////判断是否到达目标位置，误差小于 0.1 即当作到达
-//bool mpuDevAngle::mpuDevAngleReachTarget(RTVector3_T<RTFLOAT> targetAngle, float precision/* = 0.1*/) {
-	////先更新当前值
-	//mpuDevAnglePresentUpdate();
-//
-	////if (abs(presentYaw - targetYaw) < precision) {	//abs in cmath
-		////cout << "we got present yaw: " << presentYaw << ",target is:" << targetYaw << " ,difference: " << presentYaw - targetYaw << endl;
-		////return true;
-	////}
-	//return false;
-//}
-
 RTVector3_T<RTFLOAT> mpuDevAngle::getAnglePresent() {
 	return presentAngle;
 }
-
-
-
-
-
-#if false
-int mpuDevYaw::mpuDevYawInit(int _bufferSize /*= 200*/, int _compareSizeStill /*= 100*/, int _compareSizeMoving /* = 10*/){	//确定当前位置时使用 compareSize = 100，运动过程中实时计算取 30 即可
-	bufferSize = _bufferSize;
-	compareSizeStill = _compareSizeStill;
-	compareSizeMoving = _compareSizeMoving;
-	//初始化
-	mpubuffer.resize(bufferSize);
-}
-
-void mpuDevYaw::mpuDevYawBufferUpdate(float newYaw){
-	if (accessBufferMutex.try_lock()){	//得到锁便更新，否则忽视
-		mpubuffer.pop_front();
-		mpubuffer.push_back(newYaw);
-		accessBufferMutex.unlock();
-	}
-	else{
-		cout << "Failed to get the lock when update buffer" << endl;
-	}
-
-};
-
-inline float mpuDevYaw::CalculateAvg(list<float> &callist)
-{
-	float avg = 0;
-	list<float>::iterator it;
-	for (it = callist.begin(); it != callist.end(); it++) {
-		avg += *it;
-		//cout << " " << *it ;
-	}
-
-	avg /= callist.size();
-	//cout << endl  << callist.size() << endl;
-	return avg;
-}
-
-//当前值
-int mpuDevYaw::mpuDevYawPresentUpdate(bool moving/* = false*/){	//moving 指示是否是正在运行
-
-	int compareSize = moving ? compareSizeMoving : compareSizeStill;
-
-	//tmpbuffer 为判断当前位置的 buffer，首先取出需要大小的元组
-	tmpbuffer.clear();
-	accessBufferMutex.lock();
-	tmpbuffer = mpubuffer;
-	accessBufferMutex.unlock();
-	std::list<float>::iterator it1, it2;
-	it1 = it2 = tmpbuffer.begin();
-	advance(it2, bufferSize - compareSize);
-	tmpbuffer.erase(it1, it2);
-
-	//排序，去除最值
-	tmpbuffer.sort();
-	for (int i = 0; i < compareSize / 5; i++){ //去除最大和最小的  五分之一 个数据（有可能会出现噪声）
-		tmpbuffer.pop_back();
-		tmpbuffer.pop_front();
-	}
-
-	presentYaw = CalculateAvg(tmpbuffer);
-	
-	return 0;
-}
-
-//判断是否到达目标位置，误差小于 0.1 即当作到达
-bool mpuDevYaw::mpuDevYawReachTarget(float targetYaw, float precision/* = 0.1*/){
-	//先更新当前值
-	mpuDevYawPresentUpdate();
-
-	if (abs(presentYaw - targetYaw) < precision){	//abs in cmath
-		cout << "we got present yaw: " << presentYaw << ",target is:" << targetYaw << " ,difference: " << presentYaw - targetYaw << endl;
-		return true;
-	}
-	return false;
-}
-
-float mpuDevYaw::getYawPresent(){
-	return presentYaw;
-}
-#endif
