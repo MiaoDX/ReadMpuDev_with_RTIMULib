@@ -48,9 +48,9 @@ int main()
 
 		//newyaw = m9250.mpuYaw.getYawPresent();
 		m9250.mpuAngle.mpuDevAnglePresentUpdate(true);
-		m9250.mpuAngle.getAnglePresent(true).print_out();
+		m9250.mpuAngle.getAnglePresent().print_out();
 		newyaw = m9250.mpuAngle.getAnglePresent().z();
-
+		/*
 		if (maxyaw < newyaw){
 			maxyaw = newyaw;
 			cout << "get new max/min: " << minyaw << " " << maxyaw << " diff: " << maxyaw - minyaw << endl;
@@ -59,7 +59,7 @@ int main()
 			minyaw = newyaw;
 			cout << "get new max/min: " << minyaw << " " << maxyaw << " diff: " << maxyaw - minyaw << endl;
 		}
-
+		*/
 
 		//if (m9250.mpuYaw.mpuDevYawReachTarget(oldyaw + 0.1, 0.05)){
 		//	//cout << "before: " << now << " ,preset: " << m9250.mpuYaw.getYawPresent() << " ,ПаІо: " << m9250.mpuYaw.getYawPresent() - now << endl;

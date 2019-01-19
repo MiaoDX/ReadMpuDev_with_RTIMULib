@@ -25,6 +25,10 @@ IMU SCL <-> raspberry SCL(Pin 5)
 
 请通电前仔细检查连接无误
 
+# Orientation
+
+It makes things much easier with the ability to specify the orientation of the chip, the normal one is XNORTH_YEAST, and if the chip is upside down as in our case, it should be XNORTH_YWEST, in this way, the angle is much more friendly. (Change `RTIMULib.ini` to specify this)
+
 # Usage In raspberry
 
 ## Install the library
