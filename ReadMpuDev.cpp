@@ -33,9 +33,6 @@ int mpuDev::mpuDevInit(){
 	imu->setGyroEnable(true);
 	imu->setAccelEnable(true);
 	imu->setCompassEnable(true);
-
-
-	mpuAngle.mpuDevAngleInit();
 	return 0;
 }
 
@@ -65,9 +62,9 @@ void mpuDev::mpuDevReadForever(){
 
 			now = RTMath::currentUSecsSinceEpoch();
 
-			//  update 100 times per second Ò²¾ÍÊÇ¼ä¸ô 10*1000 us ¶ÁÒ»´Î
+			//  update 400 times per second Ò²¾ÍÊÇ¼ä¸ô 2.5*1000 us ¶ÁÒ»´Î
 
-			if ((now - displayTimer) > 10000) {
+			if ((now - displayTimer) > 2500) {
 				//printf("Sample rate %d: %s\r", sampleRate, RTMath::displayDegrees("", imuData.fusionPose));
 				//cout << imuData.fusionPose.z() * RTMATH_RAD_TO_DEGREE << endl;
 				//fflush(stdout);
@@ -97,24 +94,16 @@ void mpuDev::mpuDevrun(){	//¿ªÆôÂÖÑ¯£¬½«Æä detach ÒÔ±£Ö¤»á²»Í£¸üÐÂ fifo£¬ÇÒ¿ÉÒÔ¼
 
 
 //class mpuDevAngle
-int mpuDevAngle::mpuDevAngleInit(int _bufferSize /*= 200*/, int _compareSizeStill /*= 100*/, int _compareSizeMoving /* = 10*/) {	//È·¶¨µ±Ç°Î»ÖÃÊ±Ê¹ÓÃ compareSize = 100£¬ÔË¶¯¹ý³ÌÖÐÊµÊ±¼ÆËãÈ¡ 30 ¼´¿É
+int mpuDevAngle::mpuDevAngleInit(int _bufferSize /*= 20*/) {
 	bufferSize = _bufferSize;
-	compareSizeStill = _compareSizeStill;
-	compareSizeMoving = _compareSizeMoving;
-	//³õÊ¼»¯
 	mpubuffer.resize(bufferSize);
 	return 0;
 }
 
 void mpuDevAngle::mpuDevAngleBufferUpdate(RTVector3_T<RTFLOAT> newAngle) {
-	if (accessBufferMutex.try_lock()) {	//µÃµ½Ëø±ã¸üÐÂ£¬·ñÔòºöÊÓ
-		mpubuffer.pop_front();
-		mpubuffer.push_back(newAngle);
-		accessBufferMutex.unlock();
-	}
-	else {
-		cout << "Failed to get the lock when update buffer" << endl;
-	}
+	lock_guard<mutex> lock(accessBufferMutex);
+	mpubuffer.pop_front();
+	mpubuffer.push_back(newAngle);
 
 }
 ;
@@ -128,38 +117,16 @@ inline RTVector3_T<RTFLOAT> mpuDevAngle::CalculateAvg(list<RTVector3_T<RTFLOAT>>
 		//cout << " " << *it ;
 	}
 
-	//avg /= callist.size();
 	avg.setX(avg.x() / callist.size());
 	avg.setY(avg.y() / callist.size());
 	avg.setZ(avg.z() / callist.size());
-	//cout << endl  << callist.size() << endl;
 	return avg;
 }
 
 //µ±Ç°Öµ:°´ yaw ½øÐÐÅÅÐò£¬ sort(CompZ())
-int mpuDevAngle::mpuDevAnglePresentUpdate(bool moving/* = false*/) {	//moving Ö¸Ê¾ÊÇ·ñÊÇÕýÔÚÔËÐÐ
-
-	int compareSize = moving ? compareSizeMoving : compareSizeStill;
-
-	//tmpbuffer ÎªÅÐ¶Ïµ±Ç°Î»ÖÃµÄ buffer£¬Ê×ÏÈÈ¡³öÐèÒª´óÐ¡µÄÔª×é
-	tmpbuffer.clear();
-	accessBufferMutex.lock();
-	tmpbuffer.assign(mpubuffer.begin(), mpubuffer.end());
-	accessBufferMutex.unlock();
-	std::list<RTVector3_T<RTFLOAT>>::iterator it1, it2;
-	it1 = it2 = tmpbuffer.begin();
-	advance(it2, bufferSize - compareSize);
-	tmpbuffer.erase(it1, it2);
-
-	//ÅÅÐò£¬È¥³ý×îÖµ
-	tmpbuffer.sort(CompZ());
-	for (int i = 0; i < compareSize / 5; i++) { //È¥³ý×î´óºÍ×îÐ¡µÄ  Îå·ÖÖ®Ò» ¸öÊý¾Ý£¨ÓÐ¿ÉÄÜ»á³öÏÖÔëÉù£©
-		tmpbuffer.pop_back();
-		tmpbuffer.pop_front();
-	}
-
-	presentAngle = CalculateAvg(tmpbuffer);
-	
+int mpuDevAngle::mpuDevAnglePresentUpdate() {
+	lock_guard<mutex> lock(accessBufferMutex);
+	presentAngle = CalculateAvg(mpubuffer);
 	return 0;
 }
 

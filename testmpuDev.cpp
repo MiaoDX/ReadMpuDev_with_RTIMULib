@@ -25,6 +25,7 @@ int main()
 {
 	mpuDev m9250;
 	m9250.mpuDevInit();
+	m9250.mpuAngle.mpuDevAngleInit(10);
 	m9250.mpuDevrun();
 
 	sleep(3);
@@ -32,7 +33,7 @@ int main()
 	m9250.mpuYaw.mpuDevYawPresentUpdate(false);
 	cout << m9250.mpuYaw.getYawPresent() << endl;
 	*/
-	m9250.mpuAngle.mpuDevAnglePresentUpdate(false);
+	m9250.mpuAngle.mpuDevAnglePresentUpdate();
 	m9250.mpuAngle.getAnglePresent().print_out();
 	
 	//float oldyaw = m9250.mpuYaw.getYawPresent();
@@ -47,7 +48,7 @@ int main()
 		//m9250.mpuYaw.mpuDevYawPresentUpdate(true);
 
 		//newyaw = m9250.mpuYaw.getYawPresent();
-		m9250.mpuAngle.mpuDevAnglePresentUpdate(true);
+		m9250.mpuAngle.mpuDevAnglePresentUpdate();
 		m9250.mpuAngle.getAnglePresent().print_out();
 		newyaw = m9250.mpuAngle.getAnglePresent().z();
 		/*
